@@ -58,7 +58,7 @@ package [type.package];
 [for starImport in type.requiredSourceStarImports]
 import [starImport];
 [/for]
-
+[annotationsWhenTopLevel type true]
 final class [type.name]_Fields[type.generics] {
   [for a in type.allMarshalingAttributes]
     public [a.type] [a.name];
