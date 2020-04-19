@@ -66,6 +66,37 @@ final class [type.name]_Fields[type.generics] {
 }
 [/template]
 
+[template generateInnerFields Type type]
+  [if type.generics.isEmpty]
+
+  private static final Fields _FIELDS = new Fields();
+  [/if]
+
+  public static[type.generics.def] Fields[type.generics.args] _fields() {
+    [if type.generics.isEmpty]
+    return _FIELDS;
+    [else]
+    return new Fields[type.generics.diamond]();
+    [/if]
+  }
+
+  [atGenerated type]
+  public static final class Fields[type.generics] {
+    private Fields() {}
+  [for a in type.allMarshalingAttributes]
+    [if a.collectionType]
+    public final org.immutables.value.CollectionField[a.genericArgs] [a.name] = new org.immutables.value.CollectionField<>("[a.name]", [a.isMandatory]);
+    [else if a.numberType]
+    public final org.immutables.value.NumberField<[a.wrapperType]> [a.name] = new org.immutables.value.NumberField<>("[a.name]", [a.isMandatory]);
+    [else if a.optionalType]
+    public final org.immutables.value.Field[a.genericArgs] [a.name] = new org.immutables.value.Field<>("[a.name]", [a.isMandatory]);
+    [else]
+    public final org.immutables.value.Field<[a.wrapperType]> [a.name] = new org.immutables.value.Field<>("[a.name]", [a.isMandatory]);
+    [/if]
+  [/for]
+  }
+[/template]
+
 [template annotationsWhenTopLevel Type type Boolean is]
 [-- adding generated annotation even if not top level --]
 [atGenerated type]
@@ -228,6 +259,7 @@ import static [routine].immutableCopyOf;
   [/if]
   [generateBuilder type false]
 [/if]
+[generateInnerFields type]
 [if not type.constitution.outsideBuilder]
   [rr.staticMethods type.implementedAttributes]
 [/if]
