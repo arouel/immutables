@@ -27,6 +27,8 @@ public final class ValueMirrors {
   @Mirror.Annotation("org.immutables.value.Value.Immutable")
   public @interface Immutable {
 
+    boolean _fields() default false;
+
     boolean singleton() default false;
 
     boolean intern() default false;

@@ -599,6 +599,10 @@ public final class ValueType extends TypeIntrospectionBase implements HasStyleIn
     return implementedInterfacesNames.contains(typeWith().relative());
   }
 
+  public boolean isUseFields() {
+    return immutableFeatures._fields();
+  }
+
   public boolean isUseCopyMethods() {
     return !getSettableAttributes().isEmpty()
         && (isGenerateWithInterface()
