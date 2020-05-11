@@ -34,6 +34,10 @@ public abstract class ValueImmutableInfo implements ValueMirrors.Immutable {
 
   @Value.Parameter
   @Override
+  public abstract boolean _fields();
+
+  @Value.Parameter
+  @Override
   public abstract boolean builder();
 
   @Value.Parameter
@@ -58,6 +62,7 @@ public abstract class ValueImmutableInfo implements ValueMirrors.Immutable {
 
   static ImmutableValueImmutableInfo infoFrom(ImmutableMirror input) {
     return ImmutableValueImmutableInfo.theOf(
+        input._fields(),
         input.builder(),
         input.copy(),
         input.intern(),

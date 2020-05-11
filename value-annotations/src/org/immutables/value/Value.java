@@ -55,6 +55,13 @@ public @interface Value {
   public @interface Immutable {
 
     /**
+     * If {@code fields=false}, disables generation of {@code _fields()}. Default is
+     * {@literal false}.
+     * @return if generate fields
+     */
+    boolean _fields() default true;
+
+    /**
      * If {@code singleton=true}, generates internal singleton object constructed without any
      * specified parameters. Default is {@literal false}. To access singleton instance use
      * {@code .of()} static accessor method.

@@ -66,6 +66,71 @@ final class [type.name]_Fields[type.generics] {
 }
 [/template]
 
+[template generateInnerFields Type type]
+[if type.useFields]
+  [if type.generics.isEmpty]
+
+  private static final Fields _FIELDS = new Fields();
+  [/if]
+
+  public static[type.generics.def] Fields[type.generics.args] _fields() {
+    [if type.generics.isEmpty]
+    return _FIELDS;
+    [else]
+    return new Fields[type.generics.diamond]();
+    [/if]
+  }
+
+  [atGenerated type]
+  public static final class Fields[type.generics] {
+    private Fields() {}
+  [for a in type.allMarshalingAttributes]
+    [if a.customCollectionType]
+    // if a.customCollectionType
+    public final org.immutables.value.field.Field<[a.wrapperType]> [a.name] =
+      org.immutables.value.field.Field.ofField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
+    [else if a.collectionType]
+    // if a.collectionType
+    public final org.immutables.value.field.CollectionField<[a.firstTypeParameter], [a.type]> [a.name] =
+      org.immutables.value.field.Field.ofCollectionField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
+    [else if a.instantType]
+    // if a.instantType
+    public final org.immutables.value.field.InstantField [a.name] =
+      org.immutables.value.field.Field.ofInstantField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
+    [else if a.numberType]
+    // if a.numberType
+    public final org.immutables.value.field.NumberField<[a.wrapperType]> [a.name] =
+      org.immutables.value.field.Field.ofNumberField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
+    [else]
+    // else [a.rawType]
+    public final org.immutables.value.field.Field<[a.wrapperType]> [a.name] =
+      org.immutables.value.field.Field.ofField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
+    [/if]
+  [/for]
+  }
+[/if]
+[/template]
+
 [template annotationsWhenTopLevel Type type Boolean is]
 [-- adding generated annotation even if not top level --]
 [atGenerated type]
@@ -228,6 +293,7 @@ import static [routine].immutableCopyOf;
   [/if]
   [generateBuilder type false]
 [/if]
+[generateInnerFields type]
 [if not type.constitution.outsideBuilder]
   [rr.staticMethods type.implementedAttributes]
 [/if]
