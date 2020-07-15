@@ -1,5 +1,6 @@
 package org.immutables.value.field;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.ServiceLoader;
 
@@ -23,6 +24,13 @@ public abstract class Field<T> {
     public static <T> Field<T> ofField(String name, TypeToken<T> type, boolean mandatory) {
         for (Factory factory : ServiceLoader.load(Factory.class)) {
             return factory.buildField(name, type, mandatory);
+        }
+        return null;
+    }
+
+    public static <T> InstantField ofInstantField(String name, TypeToken<Instant> type, boolean mandatory) {
+        for (Factory factory : ServiceLoader.load(Factory.class)) {
+            return factory.buildInstantField(name, type, mandatory);
         }
         return null;
     }

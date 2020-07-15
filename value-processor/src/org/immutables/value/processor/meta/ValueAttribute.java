@@ -554,6 +554,10 @@ public final class ValueAttribute extends TypeIntrospectionBase implements HasSt
     report().annotationNamed(annotationName).error(String.format("@Value.%s %s", annotationName, msg));
   }
 
+  public boolean isInstantType() {
+    return "java.time.Instant".equals(rawTypeName);
+  }
+
   public boolean isJdkOptional() {
     return typeKind.isOptionalKind() && typeKind.isJdkOnlyContainerKind();
   }

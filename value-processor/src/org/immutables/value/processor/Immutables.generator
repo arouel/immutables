@@ -101,6 +101,14 @@ final class [type.name]_Fields[type.generics] {
         new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
         [a.isMandatory]);
 
+    [else if a.instantType]
+    // if a.instantType
+    public final org.immutables.value.field.InstantField [a.name] =
+      org.immutables.value.field.Field.ofInstantField(
+        "[a.name]",
+        new com.google.gson.reflect.TypeToken<[a.wrapperType]>() {},
+        [a.isMandatory]);
+
     [else if a.numberType]
     // if a.numberType
     public final org.immutables.value.field.NumberField<[a.wrapperType]> [a.name] =
@@ -110,7 +118,7 @@ final class [type.name]_Fields[type.generics] {
         [a.isMandatory]);
 
     [else]
-    // else
+    // else [a.rawType]
     public final org.immutables.value.field.Field<[a.wrapperType]> [a.name] =
       org.immutables.value.field.Field.ofField(
         "[a.name]",
